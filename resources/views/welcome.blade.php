@@ -117,10 +117,32 @@
             .addBtn:hover {
               background-color: #bbb;
             }
+
+            .infobox {
+              padding: 10px;
+              text-align: center;
+              margin: 10px;
+            }
+
+            .error {
+              background-color: #e83e8c;
+              color: #fff;
+              font-weight: bold;
+            }
+
+            .success {
+              background-color: #20c997;
+              color: #fff;
+              font-weight: bold;
+            }
         </style>
     </head>
     <body>
         @include('partials.header')
+
+        @include('partials.infobox')
+
+        @include('partials.error')
         
         @yield('content')
     </body>

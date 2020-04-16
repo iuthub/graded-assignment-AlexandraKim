@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Rules\MinWordsValidation;
 
 class TasksController extends Controller
 {
@@ -33,16 +34,21 @@ class TasksController extends Controller
     }
 
     public function getDeleteTask($id){
+    	$taskTitle = Task::find($id)['title'];
     	Task::find($id)->delete();
 
     	return redirect()->route('getTasks')->with([
     		'tasks' => Task::all()->toArray(),
-    		'info' => 'The task has been deleted ' . $id
+    		'info' => '"' . $taskTitle . '" has been deleted'
     	]);
 
     }
 
     public function postAddTask(Request $req){
+    	$validation = $this->validate($req, [
+			'title' => ['required', new MinWordsValidation]
+		]);
+
     	$task = new Task();
     	$task->title = $req->input('title');
     	$task->ticked = false;
@@ -50,8 +56,8 @@ class TasksController extends Controller
 
     	return redirect()->route('getTasks')->with([
     		'tasks' => Task::all()->toArray(),
-    		'info' => 'The task has been added'
-    	]);
+    		'info' => 'New task has been added'
+    	])->withErrors($validation, 'task');
     }
-    
+
 }
