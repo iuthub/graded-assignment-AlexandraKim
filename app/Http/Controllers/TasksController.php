@@ -10,7 +10,7 @@ class TasksController extends Controller
 {
     public function getTasks() {
     	return view('index', [
-    		'tasks' => Task::all()->toArray()
+    		'tasks' => Task::all()->sortByDesc('created_at')->toArray()
     	]); 
     }
 
