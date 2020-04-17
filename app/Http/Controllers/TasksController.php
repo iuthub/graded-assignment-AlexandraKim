@@ -15,7 +15,7 @@ class TasksController extends Controller
 
         $tasks = [];
         if ($user != null){
-            $tasks = $user->tasks;
+            $tasks = $user->tasks->sortByDesc('updated_at');
         }
        
         return view('index', [
