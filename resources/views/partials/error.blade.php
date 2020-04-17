@@ -5,3 +5,10 @@
 		@endforeach
 	</div>
 @endif
+
+@if(Session::get('error') != null)
+	<div class="infobox error">
+		<p>{{ Session::get('error') }}</p>
+	</div>
+@endif
+

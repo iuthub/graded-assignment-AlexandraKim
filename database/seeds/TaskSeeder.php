@@ -10,9 +10,24 @@ class TaskSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {   
+        DB::table('tasks')->insert([
+            'title' => 'IP QUIZ',
+            'ticked' => 0,
+        ]);
+
+        DB::table('tasks')->insert([
+            'title' => 'EM QUIZ',
+            'ticked' => 0,
+        ]);
+
         DB::table('tasks')->insert([
             'title' => 'CAL HW5',
+            'ticked' => 0,
+        ]);
+
+        DB::table('tasks')->insert([
+            'title' => 'CAL HW6',
             'ticked' => 0,
         ]);
 

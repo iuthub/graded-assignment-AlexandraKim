@@ -5,18 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Rules\MinWordsValidation;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TasksController extends Controller
 {
     public function getTasks() {
-    	return view('index', [
-    		'tasks' => Task::all()->sortByDesc('created_at')->toArray()
+        $user = Auth::user();
+
+        $tasks = [];
+        if ($user != null){
+            $tasks = $user->tasks;
+        }
+       
+        return view('index', [
+    		'tasks' => $tasks
     	]); 
     }
 
     public function editTaskView($id) {
+        $task = Task::all()->find($id);
+
+        if(Gate::denies('edit-tasks', $task)) {
+            return redirect()->back()->with([
+                'error' => "You don't have permissions to edit this task."
+            ]);
+        }
+        
     	return view('editTaskView', [
-    		'task' => Task::find($id)
+    		'task' => $task
     	]);
 
     }
@@ -35,11 +52,18 @@ class TasksController extends Controller
     }
 
     public function getDeleteTask($id){
-    	$taskTitle = Task::find($id)['title'];
+        $task = Task::find($id);
+
+        if(Gate::denies('edit-tasks', $task)) {
+            return redirect()->back()->with([
+                'error' => "You don't have permissions to delete this task."
+            ]);
+        }
+
+    	$taskTitle = $task['title'];
     	Task::find($id)->delete();
 
     	return redirect()->route('getTasks')->with([
-    		'tasks' => Task::all()->toArray(),
     		'info' => '"' . $taskTitle . '" has been deleted'
     	]);
 
@@ -50,13 +74,16 @@ class TasksController extends Controller
 			'title' => ['required', new MinWordsValidation]
 		]);
 
-    	$task = new Task();
-    	$task->title = $req->input('title');
-    	$task->ticked = false;
-    	$task->save();
+        $user = Auth::user();
+
+    	$task = new Task([
+            'title' => $req->input('title'),
+            'ticked' => false
+        ]);
+    	
+        $user->tasks()->save($task);
 
     	return redirect()->route('getTasks')->with([
-    		'tasks' => Task::all()->toArray(),
     		'info' => 'New task has been added'
     	])->withErrors($validation, 'task');
     }

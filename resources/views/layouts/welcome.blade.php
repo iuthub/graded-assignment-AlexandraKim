@@ -12,16 +12,11 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
         
         <script src="https://kit.fontawesome.com/8500f75e5b.js" crossorigin="anonymous"></script>
-
+        <script src="{{ asset('js/app.js') }}" defer></script>
         <!-- Styles -->
         
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-
-        <script src="{{ asset('js/app.js') }}" defer></script>
-
-
-        <!-- Styles -->
        
     </head>
     <body>
