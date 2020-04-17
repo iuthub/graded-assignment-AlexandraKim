@@ -49,10 +49,19 @@ ul#tasks li .action {
     vertical-align: middle;
 }
 
-ul#tasks li a {
+ul#tasks li a, ul#tasks li button {
     color: grey;
+    background: none;
+    padding: 0;
+    border: none;
 }
 
+ul#tasks li button:hover .fa-square:before {
+    content: "\f14a";
+}
+ul#tasks li button:focus {
+    outline:0;
+}
 /* Style the header */
 .header {
   background-color: #f44336;
@@ -121,3 +130,4 @@ input {
   color: #fff;
   font-weight: bold;
 }
+

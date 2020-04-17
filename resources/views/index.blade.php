@@ -11,6 +11,9 @@
       @slot('id')
         {{ $task['id'] }}
       @endslot
+      @slot('ticked')
+        {{ $task['ticked'] }}
+      @endslot
     @endcomponent
   @endforeach
 </ul>

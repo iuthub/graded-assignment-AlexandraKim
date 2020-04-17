@@ -41,6 +41,12 @@ Route::post('add', [
 	'as' => 'postAddTask',
 	'middleware' => 'auth'
 ]);
+
+Route::post('done', [
+	'uses' => 'TasksController@markAsDone',
+	'as' => 'markAsDone',
+	'middleware' => 'auth'
+]);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

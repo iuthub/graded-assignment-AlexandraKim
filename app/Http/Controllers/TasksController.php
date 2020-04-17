@@ -51,6 +51,24 @@ class TasksController extends Controller
 
     }
 
+    public function markAsDone(Request $req) {
+        $task = Task::find($req->input('id'));
+        $task->ticked = !$task->ticked;
+        $task->save();
+        $msg = '';
+        if($task->ticked) {
+            $msg = '"' . $task->title . '" is done!"';
+        } else {
+            $msg = '"' . $task->title . '" is undone!"';
+        }
+
+        return redirect()->route('getTasks')->with([
+            'tasks' => Task::all()->toArray(),
+            'info' => $msg
+        ]);
+
+    }
+
     public function getDeleteTask($id){
         $task = Task::find($id);
 
