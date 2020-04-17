@@ -37,3 +37,6 @@ Route::post('add', [
 	'uses' => 'TasksController@postAddTask',
 	'as' => 'postAddTask'
 ]);
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

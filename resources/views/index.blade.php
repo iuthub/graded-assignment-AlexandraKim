@@ -2,7 +2,7 @@
 
 @section('content')
 
-<ul id="myUL">
+<ul id="tasks">
   @foreach($tasks as $task)
     @component('taskItem')
       @slot('title')

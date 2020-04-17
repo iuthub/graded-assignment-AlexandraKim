@@ -23,12 +23,13 @@ class TasksController extends Controller
 
     public function postEditTask(Request $req) {
     	$task = Task::find($req->input('id'));
+    	$taskTitle = $task->title;
     	$task->title = $req->input('title');
     	$task->save();
 
     	return redirect()->route('getTasks')->with([
     		'tasks' => Task::all()->toArray(),
-    		'info' => 'The task has been updated ' . $req->input('id')
+    		'info' => '"' . $taskTitle . '" has been renamed to "' . $task->title . '"'
     	]);
 
     }
